@@ -1,0 +1,23 @@
+#This is a values.yaml to install banzaicloud/logging-operator-logging helm-chart. It will collect all logs from the selected namespaces and forwards them to a local Loki instance.
+nameOverride: logging-operator-monitoring-stack
+clusterFlows:
+  - name: all-system-pods
+    spec:
+      match:
+        - select:
+            namespaces:
+            - kube-system
+            - monitoring
+            - logging
+            - tracing
+      globalOutputRefs:
+        - loki
+clusterOutputs:
+  - name: loki
+    spec:
+      loki:
+        url: http://my-loki.default.svc.cluster.local:3100
+        configure_kubernetes_labels: true
+        extra_labels:
+          cluster: eks-test-cluster
+          region: eu-west-1

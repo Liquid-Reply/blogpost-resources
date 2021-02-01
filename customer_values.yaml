@@ -1,0 +1,36 @@
+#This is a values.yaml to install banzaicloud/logging-operator-logging helm-chart. It will collect all logs from the default namespace and forwards them to AWS Cloudwatch.
+nameOverride: logging-operator-customer-stack
+clusterFlows:
+  - name: all-customer-pods
+    spec:
+      match:
+        - exclude:
+            namespaces:
+            - kube-system
+            - monitoring
+            - logging
+            - tracing
+      globalOutputRefs:
+        - cloudwatch
+clusterOutputs:
+  - name: cloudwatch
+    spec:
+      cloudwatch:
+        aws_key_id:
+          valueFrom:
+            secretKeyRef:
+              name: logging-s3
+              key: awsAccessKeyId
+        aws_sec_key:
+          valueFrom:
+            secretKeyRef:
+              name: logging-s3
+              key: awsSecretAccessKey
+        log_group_name: customer-log-group
+        log_stream_name: customer-log-stream
+        region: eu-west-1
+        auto_create_stream true
+        buffer:
+          timekey: 30s
+          timekey_wait: 30s
+          timekey_use_utc: true
