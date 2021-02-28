@@ -1,13 +1,8 @@
-# Logging Operator Demo
+# Blogpost Resources
 
-This is our demo repository which is published with the [tutorial blogpost](https://liquidreply.net/howto-use-the-logging-operator).
-It contains a customer_values.yaml which can be used to set up a log stream for all Kubernetes Namespaces that are not `kube-system, monitoring, logging, tracing` and a management_values.yaml that will collect logs from the named namespaces.
+This is our repository to store all material which is published on [our blog](https://liquidreply.net/).
 
-# Usage
-
-Just install the `banzaicloud/logging-operator` helm-chart and the `banzaicloud/logging-operator-logging` helm-chart with these two values-files. 
-
-# References
-https://banzaicloud.com/docs/one-eye/logging-operator/
-https://github.com/banzaicloud/logging-operator
-https://liquidreply.net/howto-use-the-logging-operator
+| Blogpost  | Link  |
+|---|---|
+| HowTo: Use the Logging-Operator  |  https://liquidreply.net/howto-use-the-logging-operator |
+| An introduction to Loki  |  https://liquidreply.net/an-introduction-to-loki |
