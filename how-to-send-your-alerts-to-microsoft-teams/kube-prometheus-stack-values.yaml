@@ -1,0 +1,18 @@
+alertmanager: 
+  enabled: true
+  config:
+    global:
+      resolve_timeout: 5m
+    receivers:
+    - name: blackhole
+    - name: prometheus-msteams
+      webhook_configs:
+      - url: "http://prometheus-msteams.default:2000/kubernetes-monitoring"
+        send_resolved: true
+    route:
+      receiver: blackhole
+      repeat_interval: 12h
+      routes:
+      - match:
+          severity: critical
+        receiver: prometheus-msteams
