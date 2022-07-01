@@ -1,0 +1,61 @@
+policies:
+  - name: delete-instance-in-high-carbon-zone
+    description: |
+      Deletes all instances in high carbon zones
+    resource: gcp.instance
+    mode:
+      type: gcp-audit
+      methods:
+        - beta.compute.instances.insert  # got this value from the audit logs
+        - v1.compute.instances.insert    # to have the future value in place already
+    filters:
+      - and:
+        - "tag:highcarbon": absent
+        - not:
+          - type: value
+            key: "zone"
+            op: regex
+            value: "(.*northamerica-northeast1.*|.*northamerica-northeast2.*|.*southamerica-east1.*|.*us-central1.*|.*us-west1.*|.*europe-north1.*|.*europe-southwest1.*|.*europe-west1.*|.*europe-west6.*|.*europe-west9.*)"
+    actions:
+      - type: delete
+
+# Low carbon regions GCP
+# northamerica-northeast1
+# northamerica-northeast2
+# southamerica-east1
+# us-central1
+# us-west1
+# europe-north1
+# europe-southwest1
+# europe-west1
+# europe-west6
+# europe-west9
+
+
+  # - name: mark-for-stop-instance-in-high-carbon-zone
+  #   description: |
+  #     Marks all instances in high carbon zones to stop in 7 days and notify
+  #   resource: gcp.instance
+  #   mode:
+  #     # type: gcp-audit
+  #     # methods:
+  #     #   - beta.compute.instances.insert
+  #     #   - v1.compute.instances.insert
+  #     type: pull
+  #   filters:
+  #     - not:
+  #       - type: value
+  #         key: "zone"
+  #         op: regex
+  #         value: "(.*northamerica-northeast1.*|.*northamerica-northeast2.*|.*southamerica-east1.*|.*us-central1.*|.*us-west1.*|.*europe-north1.*|.*europe-southwest1.*|.*europe-west1.*|.*europe-west6.*|.*europe-west9.*)"
+  #   actions:
+  #     - type: mark-for-op
+  #       op: stop
+  #       days: 7
+  #     - type: webhook
+  #       # method: POST
+  #       # headers:
+  #       #   static-value: '`Content-type: application/json`'
+  #       url: https://hooks.slack.com/services/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
+  #       body: |
+  #         {"text": resource.Name}

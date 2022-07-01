@@ -1,0 +1,87 @@
+{
+  "policy": {
+    "name": "delete-instance-in-high-carbon-zone",
+    "description": "Deletes all instances in high carbon zones\n",
+    "resource": "gcp.instance",
+    "mode": {
+      "type": "pull"
+    },
+    "filters": [
+      {
+        "and": [
+          {
+            "tag:highcarbon": "absent"
+          },
+          {
+            "not": [
+              {
+                "type": "value",
+                "key": "zone",
+                "op": "regex",
+                "value": "(.*northamerica-northeast1.*|.*northamerica-northeast2.*|.*southamerica-east1.*|.*us-central1.*|.*us-west1.*|.*europe-north1.*|.*europe-southwest1.*|.*europe-west1.*|.*europe-west6.*|.*europe-west9.*)"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "type": "delete"
+      }
+    ]
+  },
+  "version": "0.9.17",
+  "execution": {
+    "id": "3b0530cd-5632-4a23-aeff-bfb76800142e",
+    "start": 1656700236.0340831,
+    "end_time": 1656700237.394859,
+    "duration": 1.3607759475708008
+  },
+  "config": {
+    "region": "",
+    "regions": [],
+    "cache": "~/.cache/cloud-custodian.cache",
+    "profile": null,
+    "account_id": null,
+    "assume_role": null,
+    "external_id": null,
+    "log_group": null,
+    "tracer": null,
+    "metrics_enabled": null,
+    "metrics": null,
+    "output_dir": "out",
+    "cache_period": 15,
+    "dryrun": false,
+    "authorization_file": null,
+    "subparser": "run",
+    "config": null,
+    "configs": [
+      "cloud-custodian.yml"
+    ],
+    "policy_filters": [],
+    "resource_types": [],
+    "verbose": null,
+    "quiet": null,
+    "debug": false,
+    "skip_validation": false,
+    "command": "c7n.commands.run",
+    "vars": null
+  },
+  "sys-stats": {},
+  "api-stats": {},
+  "metrics": [
+    {
+      "MetricName": "ResourceCount",
+      "Timestamp": "2022-07-01T20:30:37.393640",
+      "Value": 0,
+      "Unit": "Count"
+    },
+    {
+      "MetricName": "ResourceTime",
+      "Timestamp": "2022-07-01T20:30:37.393670",
+      "Value": 1.3582398891448975,
+      "Unit": "Seconds"
+    }
+  ]
+}

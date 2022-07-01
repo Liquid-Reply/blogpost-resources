@@ -1,0 +1,93 @@
+{
+  "policy": {
+    "name": "mark-for-stop-instance-in-high-carbon-zone",
+    "description": "Marks all instances in high carbon zones to stop in 7 days and notify\n",
+    "resource": "gcp.instance",
+    "mode": {
+      "type": "pull"
+    },
+    "filters": [
+      {
+        "not": [
+          {
+            "type": "value",
+            "key": "zone",
+            "op": "regex",
+            "value": "(.*northamerica-northeast1.*|.*northamerica-northeast2.*|.*southamerica-east1.*|.*us-central1.*|.*us-west1.*|.*europe-north1.*|.*europe-southwest1.*|.*europe-west1.*|.*europe-west6.*|.*europe-west9.*)"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "type": "mark-for-op",
+        "op": "stop",
+        "days": 7
+      },
+      {
+        "type": "webhook",
+        "url": "https://hooks.slack.com/services/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",
+        "body": "{\"text\": resource.Name}"
+      }
+    ]
+  },
+  "version": "0.9.17",
+  "execution": {
+    "id": "5090506e-2cd3-4d7a-a486-8579d87f2385",
+    "start": 1656699429.521962,
+    "end_time": 1656699432.424868,
+    "duration": 2.9029061794281006
+  },
+  "config": {
+    "region": "",
+    "regions": [],
+    "cache": "~/.cache/cloud-custodian.cache",
+    "profile": null,
+    "account_id": null,
+    "assume_role": null,
+    "external_id": null,
+    "log_group": null,
+    "tracer": null,
+    "metrics_enabled": null,
+    "metrics": null,
+    "output_dir": "out",
+    "cache_period": 15,
+    "dryrun": false,
+    "authorization_file": null,
+    "subparser": "run",
+    "config": null,
+    "configs": [
+      "cloud-custodian.yml"
+    ],
+    "policy_filters": [],
+    "resource_types": [],
+    "verbose": null,
+    "quiet": null,
+    "debug": false,
+    "skip_validation": false,
+    "command": "c7n.commands.run",
+    "vars": null
+  },
+  "sys-stats": {},
+  "api-stats": {},
+  "metrics": [
+    {
+      "MetricName": "ResourceCount",
+      "Timestamp": "2022-07-01T20:17:10.854823",
+      "Value": 1,
+      "Unit": "Count"
+    },
+    {
+      "MetricName": "ResourceTime",
+      "Timestamp": "2022-07-01T20:17:10.854848",
+      "Value": 1.3318181037902832,
+      "Unit": "Seconds"
+    },
+    {
+      "MetricName": "ActionTime",
+      "Timestamp": "2022-07-01T20:17:12.424823",
+      "Value": 1.5685019493103027,
+      "Unit": "Seconds"
+    }
+  ]
+}
