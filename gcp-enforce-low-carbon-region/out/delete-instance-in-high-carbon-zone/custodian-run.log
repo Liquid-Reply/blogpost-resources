@@ -1,2 +1,0 @@
-2022-07-01 20:26:59,500 - custodian.policy - INFO - policy:delete-instance-in-high-carbon-zone resource:gcp.instance region: count:0 time:1.36
-2022-07-01 20:30:37,393 - custodian.policy - INFO - policy:delete-instance-in-high-carbon-zone resource:gcp.instance region: count:0 time:1.36
