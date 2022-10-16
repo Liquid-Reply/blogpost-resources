@@ -1,0 +1,4 @@
+gcloud compute instances create example-instance --image-family=rhel-8 --image-project=rhel-cloud --zone=europe-west2-a
+
+ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+ - Location ZONE:europe-west2-a violates constraint constraints/gcp.resourceLocations on the resource projects/liquid-florian-stoeber-668/zones/europe-west2-a/instances/example-instance.
