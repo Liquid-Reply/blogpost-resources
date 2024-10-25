@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: acme-httproute-staging
+  namespace: default
+spec:
+  parentRefs:
+    - name: acme-gateway-staging
+  hostnames:
+  - "staging.liquidtest.click"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /test
+      backendRefs:
+      - name: coffee
+        port: 80
