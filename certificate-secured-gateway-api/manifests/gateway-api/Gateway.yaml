@@ -1,0 +1,28 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: acme-gateway-staging
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+spec:
+  gatewayClassName: nginx
+  listeners:
+    - name: http-listener
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: https-listener
+      hostname: "staging.liquidtest.click"
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: acme-gateway-staging-certificate
+            kind: Secret
+            group:
